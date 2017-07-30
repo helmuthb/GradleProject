@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        applicationId "com.udacity.gradle.builditbigger"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        paid
+        free {
+            dependencies {
+                compile 'com.google.android.gms:play-services-ads:11.0.4'
+            }
+        }
+    }
+    sourceSets {
+        free { java.srcDirs = ['src/free/java', 'src/free/java/'] }
+        paid { java.srcDirs = ['src/paid/java', 'src/paid/java/'] }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile project(":jokes-lib")
+    compile project(":jokes-androidlib")
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
+    compile 'com.google.api-client:google-api-client-android:1.22.0'
+    compile project(path: ':backend', configuration: 'android-endpoints')
+}
