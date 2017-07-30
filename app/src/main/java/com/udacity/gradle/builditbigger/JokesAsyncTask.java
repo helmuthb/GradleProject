@@ -45,7 +45,7 @@ public class JokesAsyncTask extends AsyncTask<Void, Void, Jokes.Joke> {
             Joke modelJoke = jokesApiService.getJoke().execute();
             return new Jokes.Joke(modelJoke.getText(), modelJoke.getAuthor());
         } catch (IOException e) {
-            return new Jokes.Joke(e.getMessage(), "-- error --");
+            return new Jokes.Joke(e.getMessage(), null);
         }
     }
 }
